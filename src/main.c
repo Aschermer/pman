@@ -49,6 +49,37 @@ void deleteDirectory(char *path)
     return;
 }
 
+void copyDirectory(char *originalPath, char *newPath)
+{
+    printf("Copying %s to %s\n", originalPath, newPath);
+    if(chdir(newPath) != 0)
+    {
+        printf("Failed to Change Directories\n");
+    }
+    DIR *d;
+    struct dirent *dir;
+    d = opendir(".");
+    if (d) {
+        while ((dir = readdir(d)) != NULL) {
+            if(!(strcmp(dir->d_name, ".") == 0) && !(strcmp(dir->d_name, "..") == 0))
+            {
+                printf("Name: %10s  Type: %d\n", dir->d_name, dir->d_type);
+                if(dir->d_type == 4)
+                {
+                    
+                }
+                if(dir->d_type == 8)
+                {
+                    
+                }
+            }
+        }
+        closedir(d);
+        chdir("..");
+    }
+    return;
+}
+
 int parseOptions(char *arg)
 {
     return(0);
