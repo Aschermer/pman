@@ -106,7 +106,7 @@ void parseCommands(char *command, uint32_t optionBits, char *option1, char *opti
     }
     else if(strcmp(command, "rename") == 0)
     {
-        
+        rename(option1, option2);
     }
     else if(strcmp(command, "copy") == 0)
     {
