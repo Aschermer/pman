@@ -56,8 +56,6 @@ void copyDirectory(char *dstPath, char *srcPath)
 
     strcpy(originalPath, dstPath);
     strcpy(newPath, srcPath);
-
-    printf("Copying %s to %s\n", originalPath, newPath);
     
     struct dirent *dir;
     
@@ -111,7 +109,6 @@ void copyDirectory(char *dstPath, char *srcPath)
         }
     }
     closedir(d);
-    chdir("..");
     return;
 }
 
