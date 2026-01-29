@@ -12,7 +12,8 @@ enum OPTIONFLAGS{
     NONE = 0x0000
 };
 
-void printHelp() {
+void printHelp() 
+{
     const char *manPage = "\n\n"
         "Project Manager (pman)\n"
         "NAME\n"
@@ -31,6 +32,20 @@ void printHelp() {
         "        pman [OPTIONS] copy SRC DST\n"
         "\n";
     printf("%s", manPage);
+    return;
+}
+
+void createProject(char *option1, char *option2)
+{
+    mkdir(option1, 0777);
+    if(strcmp(option2, "c") == 0)
+    {
+        
+        chdir(option1);
+        mkdir("bin", 0777);
+        mkdir("obj", 0777);
+        mkdir("src", 0777);
+    }
     return;
 }
 
@@ -162,16 +177,7 @@ void parseCommands(char *command, uint32_t optionBits, char *option1, char *opti
     }
     else if(strcmp(command, "create") == 0)
     {
-        mkdir(option1, 0777);
-        if(strcmp(option2, "c") == 0)
-        {
-            mkdir(option1, 0777);
-            
-            chdir(option1);
-            mkdir("bin", 0777);
-            mkdir("obj", 0777);
-            mkdir("src", 0777);
-        }
+        createProject(option1, option2);
     }
     else if(strcmp(command, "delete") == 0)
     {
@@ -179,6 +185,8 @@ void parseCommands(char *command, uint32_t optionBits, char *option1, char *opti
     }
     else if(strcmp(command, "rename") == 0)
     {
+        // Unfortunately due to how the projects are structured 
+        // there is no better way to do this.
         rename(option1, option2);
     }
     else if(strcmp(command, "copy") == 0)
