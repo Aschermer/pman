@@ -11,6 +11,12 @@
 
 #include <git2.h>
 
+#define FILE_INCLUDED
+#include "create.c"
+#include "delete.c"
+#include "rename.c"
+#include "copy.c"
+
 // 32 bit flags
 enum OPTIONFLAGS{
     NONE = 0x0000
@@ -36,129 +42,6 @@ void printHelp()
         "        pman [OPTIONS] copy SRC DST\n"
         "\n";
     printf("%s", manPage);
-    return;
-}
-
-void createProject(char *option1, char *option2)
-{
-    mkdir(option1, 0777);
-    if(strcmp(option2, "c") == 0)
-    {
-        
-        chdir(option1);
-        mkdir("bin", 0777);
-        mkdir("obj", 0777);
-        mkdir("src", 0777);
-    }
-    return;
-}
-
-void deleteProject(char *path)
-{
-    printf("Deleting %s\n", path);
-    char *newPath = (char *)malloc((strlen(path) + 3) * sizeof(char));
-    newPath[0] = '.';
-    newPath[1] = '/';
-    newPath[2] = '\0';
-    strcat(newPath, path);
-    if(chdir(newPath) != 0)
-    {
-        printf("Failed to Change Directories\n");
-    }
-    DIR *d;
-    struct dirent *dir;
-    d = opendir(".");
-    if (d) {
-        while ((dir = readdir(d)) != NULL) {
-            if(!(strcmp(dir->d_name, ".") == 0) && !(strcmp(dir->d_name, "..") == 0))
-            {
-                printf("Name: %10s  Type: %d\n", dir->d_name, dir->d_type);
-                if(dir->d_type == 4)
-                {
-                    deleteProject(dir->d_name);
-                }
-                if(dir->d_type == 8)
-                {
-                    remove(dir->d_name);
-                }
-            }
-        }
-        closedir(d);
-        chdir("..");
-        rmdir(path);
-    }
-    return;
-}
-
-void renameProject(char *oldName, char *newName) {
-    
-    // Unfortunately due to how the projects are structured 
-    // there is no better way to do this.
-    rename(oldName, newName);
-    
-    return;
-}
-
-void copyProject(char *dstPath, char *srcPath)
-{
-    char originalPath[4096];
-    char newPath[4096];
-
-    strcpy(originalPath, dstPath);
-    strcpy(newPath, srcPath);
-    
-    struct dirent *dir;
-    
-    DIR *d;
-    d = opendir(originalPath);
-    if (!d) 
-    {
-        printf("Failed to Open File %s\n", originalPath);
-    }
-
-    mkdir(newPath, 0777);
-
-    while ((dir = readdir(d)) != NULL)
-    {
-        if(!(strcmp(dir->d_name, ".") == 0) && !(strcmp(dir->d_name, "..") == 0))
-        {
-            printf("Name: %10s  Type: %d\n", dir->d_name, dir->d_type);
-
-            strcat(originalPath, "/");
-            strcat(newPath, "/");
-
-            strcat(originalPath, dir->d_name);
-            strcat(newPath, dir->d_name);
-
-            if(dir->d_type == 4)
-            {
-                copyProject(originalPath, newPath);
-            }
-            else if(dir->d_type == 8)
-            {
-                FILE *srcFile = fopen(originalPath, "r");
-                FILE *dstFile = fopen(newPath, "w");
-
-                char byteBuffer[1024];
-                int bytesRead;
-                while((bytesRead = fread(byteBuffer, 1, sizeof(byteBuffer), srcFile)))
-                {
-                    if(fwrite(byteBuffer, 1, bytesRead, dstFile) != bytesRead)
-                    {
-                        printf("Error Copying File %s to %s\n", originalPath, newPath);
-                        break;
-                    }
-                }
-
-                fclose(srcFile);
-                fclose(dstFile);
-            }
-
-            strcpy(originalPath, dstPath);
-            strcpy(newPath, srcPath);
-        }
-    }
-    closedir(d);
     return;
 }
 
