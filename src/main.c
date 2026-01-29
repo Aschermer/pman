@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <ctype.h>
+
 #include <sys/stat.h>
 #include <dirent.h>
 
@@ -49,7 +50,7 @@ void createProject(char *option1, char *option2)
     return;
 }
 
-void deleteDirectory(char *path)
+void deleteProject(char *path)
 {
     printf("Deleting %s\n", path);
     char *newPath = (char *)malloc((strlen(path) + 3) * sizeof(char));
@@ -71,7 +72,7 @@ void deleteDirectory(char *path)
                 printf("Name: %10s  Type: %d\n", dir->d_name, dir->d_type);
                 if(dir->d_type == 4)
                 {
-                    deleteDirectory(dir->d_name);
+                    deleteProject(dir->d_name);
                 }
                 if(dir->d_type == 8)
                 {
@@ -86,7 +87,16 @@ void deleteDirectory(char *path)
     return;
 }
 
-void copyDirectory(char *dstPath, char *srcPath)
+void renameProject(char *oldName, char *newName) {
+    
+    // Unfortunately due to how the projects are structured 
+    // there is no better way to do this.
+    rename(oldName, newName);
+    
+    return;
+}
+
+void copyProject(char *dstPath, char *srcPath)
 {
     char originalPath[4096];
     char newPath[4096];
@@ -119,7 +129,7 @@ void copyDirectory(char *dstPath, char *srcPath)
 
             if(dir->d_type == 4)
             {
-                copyDirectory(originalPath, newPath);
+                copyProject(originalPath, newPath);
             }
             else if(dir->d_type == 8)
             {
@@ -181,17 +191,15 @@ void parseCommands(char *command, uint32_t optionBits, char *option1, char *opti
     }
     else if(strcmp(command, "delete") == 0)
     {
-        deleteDirectory(option1);
+        deleteProject(option1);
     }
     else if(strcmp(command, "rename") == 0)
     {
-        // Unfortunately due to how the projects are structured 
-        // there is no better way to do this.
-        rename(option1, option2);
+        renameProject(option1, option2);
     }
     else if(strcmp(command, "copy") == 0)
     {
-        copyDirectory(option1, option2);
+        copyProject(option1, option2);
     }
     else 
     {
