@@ -12,6 +12,28 @@ enum OPTIONFLAGS{
     NONE = 0x0000
 };
 
+void printHelp() {
+    const char *manPage = "\n\n"
+        "Project Manager (pman)\n"
+        "NAME\n"
+        "        pman - create, delete, rename, and copy projects\n"
+        "\n"
+        "CREATE\n"
+        "        pman [OPTIONS] create NAME TEMPLATE\n"
+        "\n"
+        "DELETE\n"
+        "        pman [OPTIONS] delete NAME\n"
+        "\n"
+        "RENAME\n"
+        "        pman [OPTIONS] rename OLD NEW\n"
+        "\n"
+        "COPY\n"
+        "        pman [OPTIONS] copy SRC DST\n"
+        "\n";
+    printf("%s", manPage);
+    return;
+}
+
 void deleteDirectory(char *path)
 {
     printf("Deleting %s\n", path);
@@ -136,31 +158,19 @@ void parseCommands(char *command, uint32_t optionBits, char *option1, char *opti
 
     if((strcmp(command, "-h") == 0) || (strcmp(command, "--help") == 0) || (strcmp(command, "help") == 0))
     {
-        const char *manPage = "\n\n"
-        "Project Manager (pman)\n"
-        "NAME\n"
-        "        pman - create, delete, rename, and copy projects\n"
-        "\n"
-        "CREATE\n"
-        "        pman [OPTIONS] create NAME TEMPLATE\n"
-        "\n"
-        "DELETE\n"
-        "        pman [OPTIONS] delete NAME\n"
-        "\n"
-        "RENAME\n"
-        "        pman [OPTIONS] rename OLD NEW\n"
-        "\n"
-        "COPY\n"
-        "        pman [OPTIONS] copy SRC DST\n"
-        "\n";
-        printf("%s", manPage);
+        printHelp();
     }
     else if(strcmp(command, "create") == 0)
     {
         mkdir(option1, 0777);
         if(strcmp(option2, "c") == 0)
         {
-
+            mkdir(option1, 0777);
+            
+            chdir(option1);
+            mkdir("bin", 0777);
+            mkdir("obj", 0777);
+            mkdir("src", 0777);
         }
     }
     else if(strcmp(command, "delete") == 0)
