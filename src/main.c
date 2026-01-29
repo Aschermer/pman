@@ -1,3 +1,4 @@
+#include <git2/global.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -7,6 +8,8 @@
 
 #include <sys/stat.h>
 #include <dirent.h>
+
+#include <git2.h>
 
 // 32 bit flags
 enum OPTIONFLAGS{
