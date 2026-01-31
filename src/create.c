@@ -1,17 +1,32 @@
+#include <ctype.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
-void createProject(char *option1, char *option2)
+#include "templates/c.c"
+
+void createProject(char *name, char *rawTemplate)
 {
-    mkdir(option1, 0777);
-    if(strcmp(option2, "c") == 0)
+    char template[128];
+    for(int i = 0; rawTemplate[i] != '\0'; i++)
     {
-        
-        chdir(option1);
-        mkdir("bin", 0777);
-        mkdir("obj", 0777);
-        mkdir("src", 0777);
+        template[i] = tolower(rawTemplate[i]);
     }
+    printf("%s\n", template);
+
+    if(strcmp(template, "empty") == 0 || strcmp(template, "e") == 0)
+    {
+        defaultTemplate(name);
+    }
+    else if(strcmp(template, "c") == 0)
+    {
+        defaultTemplate(name);
+        templateC();
+    }
+    else
+    {
+        printf("Please Provide A Format (\"Empty\" for an empty project)");
+    }
+
     return;
 }
