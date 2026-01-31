@@ -11,7 +11,6 @@
 
 #include <git2.h>
 
-#define FILE_INCLUDED
 #include "create.c"
 #include "delete.c"
 #include "rename.c"

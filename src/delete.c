@@ -1,19 +1,8 @@
-#ifndef FILE_INCLUDED
-
-#include <git2/global.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
-#include <ctype.h>
-
-#include <sys/stat.h>
 #include <dirent.h>
-
-#include <git2.h>
-
-#endif
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 void deleteProject(char *path)
 {

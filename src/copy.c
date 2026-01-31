@@ -1,19 +1,7 @@
-#ifndef FILE_INCLUDED
-
-#include <git2/global.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
-#include <ctype.h>
-
-#include <sys/stat.h>
 #include <dirent.h>
-
-#include <git2.h>
-
-#endif
+#include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
 
 void copyProject(char *dstPath, char *srcPath)
 {

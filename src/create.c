@@ -1,19 +1,6 @@
-#ifndef FILE_INCLUDED
-
-#include <git2/global.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdint.h>
 #include <string.h>
-#include <ctype.h>
-
 #include <sys/stat.h>
-#include <dirent.h>
-
-#include <git2.h>
-
-#endif
+#include <unistd.h>
 
 void createProject(char *option1, char *option2)
 {
