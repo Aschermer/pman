@@ -1,6 +1,6 @@
 #include <sys/stat.h>
 
-#include "templateUtils.c"
+#include "../templateUtils.c"
 
 char *buildScriptText = 
 "#!/usr/bin/bash"
