@@ -5,7 +5,17 @@ Pman is run from the command line and can create, delete, rename, or duplicate p
 ### **WARNING: This application is not made for public use. It is hardcoded for my personal file structure and will require a great deal of modification before general use.**
 
 ---
-### General Usage: pman operation [argument1] [argument2]
+### TODO:
+
+* git repository management
+* github integration
+
+---
+### General Usage: pman [operation] [arg1] [arg2]
+
+all three arguements are case-insensitive strings
+
+---
 
 ### Creation: pman create [name] [template]
 
@@ -29,3 +39,33 @@ dir/
 ├── build
 └── README.md
 ```
+
+---
+
+### Deletion: pman delete [name]
+
+Deletes the specified project and git repository.
+
+#### [name]: specifies the name of the project to be deleted
+
+---
+
+### Copying: pman copy [src] [dst]
+
+Copys the source project to a new directory and creates a new git repo.
+
+#### [src]: specifies the name of the project to be copied
+
+#### [dst]: specifies the name of the new project
+
+---
+
+### Renaming: pman rename [old] [new]
+
+Renames the specified project and git repository to the new name.
+
+#### [old]: specifies the name of the project to be renamed.
+
+#### [new]: specifies the new name of the project.
+
+---
