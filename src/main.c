@@ -11,16 +11,12 @@
 
 #include <git2.h>
 
+#include "flags.h"
+
 #include "create.c"
 #include "delete.c"
 #include "rename.c"
 #include "copy.c"
-
-// 32 bit flags
-enum FLAGS{
-    FLAG_NONE = 0b00000000000000000000000000000000,
-    FLAG_GIT_REPO = 0b00000000000000000000000000000001
-};
 
 void printHelp() 
 {
@@ -45,7 +41,7 @@ void printHelp()
     return;
 }
 
-int parseOptions(char *arg)
+uint32_t parseOptions(char *arg)
 {
     uint32_t flags = FLAG_NONE;
     for(int i = 0; arg[i] != '\0'; i++)
@@ -58,7 +54,7 @@ int parseOptions(char *arg)
             }
         }
     }
-    return(0);
+    return(flags);
 }
 
 void parseCommands(char *command, char *arg1, char *arg2, uint32_t flags)
@@ -124,7 +120,7 @@ int main(int argc, char *argv[])
         {
             if(argv[i][0] == '-')
             {
-                flags = flags | parseOptions(argv[i]);
+                flags |= parseOptions(argv[i]);
             }
             else
             {

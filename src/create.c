@@ -5,6 +5,10 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "flags.h"
+
+#include "templateUtils.c"
+
 #include "templates/c.c"
 
 void createProject(char *name, char *rawTemplate, uint32_t flags)
@@ -15,13 +19,22 @@ void createProject(char *name, char *rawTemplate, uint32_t flags)
         template[i] = tolower(rawTemplate[i]);
     }
 
-    if(strcmp(template, "empty") == 0 || strcmp(template, "e") == 0)
+    mkdir(name, 0777);
+    chdir(name);
+    printf("Created Project Directory\n");
+
+    if((flags | FLAG_GIT_REPO) != 0)
     {
-        createDefaultTemplate(name);
+        createGitRepo();
+        printf("Created Git Repo\n");
+    }
+
+    if(strcmp(template, "empty") == 0)
+    {
+        
     }
     else if(strcmp(template, "c") == 0)
     {
-        createDefaultTemplate(name);
         templateC();
     }
     else

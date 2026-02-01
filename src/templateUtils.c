@@ -14,12 +14,6 @@ void writeFile(char *fileName, char *fileContents)
     fputs(fileContents, f);
 }
 
-void createDefaultTemplate(char *name)
-{
-    mkdir(name, 0777);
-    chdir(name);
-}
-
 void createGitRepo()
 {
     git_libgit2_init();
