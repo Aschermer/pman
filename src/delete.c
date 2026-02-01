@@ -7,7 +7,6 @@
 
 void deleteProject(char *path, uint32_t flags)
 {
-    printf("Deleting %s\n", path);
     char *newPath = (char *)malloc((strlen(path) + 3) * sizeof(char));
     newPath[0] = '.';
     newPath[1] = '/';
@@ -24,7 +23,6 @@ void deleteProject(char *path, uint32_t flags)
         while ((dir = readdir(d)) != NULL) {
             if(!(strcmp(dir->d_name, ".") == 0) && !(strcmp(dir->d_name, "..") == 0))
             {
-                printf("Name: %10s  Type: %d\n", dir->d_name, dir->d_type);
                 if(dir->d_type == 4)
                 {
                     deleteProject(dir->d_name, flags);

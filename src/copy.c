@@ -27,7 +27,6 @@ void copyProject(char *dstPath, char *srcPath, uint32_t flags)
     {
         if(!(strcmp(dir->d_name, ".") == 0) && !(strcmp(dir->d_name, "..") == 0))
         {
-            printf("Name: %10s  Type: %d\n", dir->d_name, dir->d_type);
 
             strcat(originalPath, "/");
             strcat(newPath, "/");
