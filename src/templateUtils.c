@@ -21,9 +21,12 @@ void defaultTemplate(char *name)
 
     git_repository *repo = NULL;
 
-    if(git_repository_init(&repo, name, 0) != 0)
+    if(git_repository_init(&repo, ".", 0) != 0)
     {
         printf("ERROR CREATING REPO\n");
     }
+
+    git_repository_free(repo);
+    git_libgit2_shutdown();
 
 }
