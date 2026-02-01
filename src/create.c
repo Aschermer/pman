@@ -12,7 +12,6 @@ void createProject(char *name, char *rawTemplate)
     {
         template[i] = tolower(rawTemplate[i]);
     }
-    printf("%s\n", template);
 
     if(strcmp(template, "empty") == 0 || strcmp(template, "e") == 0)
     {

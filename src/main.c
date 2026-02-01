@@ -49,18 +49,15 @@ int parseOptions(char *arg)
     return(0);
 }
 
-void parseCommands(char *command, uint32_t optionBits, char *option1, char *option2)
+void parseCommands(char *command, uint32_t optionBits, char *arg1, char *arg2)
 {
     for(int i = 0; command[i] != '\0'; i++)
     {
         command[i] = tolower(command[i]);
     }
 
-    printf("Parsed Command: %s\n", command);
-    printf("Option1: %s\n", option1);
-    printf("Option2: %s\n", option2);
 
-    if((strcmp(option1, "pman") == 0) || (strcmp(option2, "pman") == 0))
+    if((strcmp(arg1, "pman") == 0) || (strcmp(arg2, "pman") == 0))
     {
         printf("Cannot Edit PMAN Directory\n");
         return;
@@ -72,19 +69,19 @@ void parseCommands(char *command, uint32_t optionBits, char *option1, char *opti
     }
     else if(strcmp(command, "create") == 0)
     {
-        createProject(option1, option2);
+        createProject(arg1, arg2);
     }
     else if(strcmp(command, "delete") == 0)
     {
-        deleteProject(option1);
+        deleteProject(arg1);
     }
     else if(strcmp(command, "rename") == 0)
     {
-        renameProject(option1, option2);
+        renameProject(arg1, arg2);
     }
     else if(strcmp(command, "copy") == 0)
     {
-        copyProject(option1, option2);
+        copyProject(arg1, arg2);
     }
     else 
     {
@@ -98,8 +95,8 @@ int main(int argc, char *argv[])
 {
     int commandID = -1;
     int32_t optionBits = 0;
-    char *option1 = 0;
-    char *option2 = 0;
+    char *arg1 = 0;
+    char *arg2 = 0;
     
 
     if(argc == 1)
@@ -116,35 +113,30 @@ int main(int argc, char *argv[])
             if(argv[i][0] == '-')
             {
                 optionBits = optionBits | parseOptions(argv[i]);
-                printf("Parsed Option: %s\n", argv[i]);
             }
             else
             {
-                if(option1 == 0)
+                if(arg1 == 0)
                 {
-                    option1 = argv[i];
-                    printf("Parsed Option1: %s\n", option1);
+                    arg1 = argv[i];
                 }
-                else if(option2 == 0)
+                else if(arg2 == 0)
                 {
-                    option2 = argv[i];
-                    printf("Parsed Option2: %s\n", option2);
+                    arg2 = argv[i];
                 }
             }
         }
     }
 
-    if(option1 == 0)
+    if(arg1 == 0)
     {
-        option1 = malloc(1 * sizeof(char));
-        option1 = "";
-        printf("Defaulted Option1\n");
+        arg1 = malloc(1 * sizeof(char));
+        arg1 = "";
     }
-    if(option2 == 0)
+    if(arg2 == 0)
     {
-        option2 = malloc(1 * sizeof(char));
-        option2 = "";
-        printf("Defaulted Option2\n");
+        arg2 = malloc(1 * sizeof(char));
+        arg2 = "";
     }
 
     if(chdir("/files/Projects") != 0)
@@ -154,9 +146,8 @@ int main(int argc, char *argv[])
     }
     char *cwd = (char *)malloc(100 * sizeof(char));
     getcwd(cwd, 100);
-    printf("Set Directory to: %s\n", cwd);
 
-    parseCommands(argv[1], optionBits, option1, option2);
+    parseCommands(argv[1], optionBits, arg1, arg2);
 
     return(0);
 }
