@@ -1,9 +1,10 @@
 #include <dirent.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
 
-void copyProject(char *dstPath, char *srcPath)
+void copyProject(char *dstPath, char *srcPath, uint32_t flags)
 {
     char originalPath[4096];
     char newPath[4096];
@@ -36,7 +37,7 @@ void copyProject(char *dstPath, char *srcPath)
 
             if(dir->d_type == 4)
             {
-                copyProject(originalPath, newPath);
+                copyProject(originalPath, newPath, flags);
             }
             else if(dir->d_type == 8)
             {

@@ -1,10 +1,11 @@
 #include <dirent.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-void deleteProject(char *path)
+void deleteProject(char *path, uint32_t flags)
 {
     printf("Deleting %s\n", path);
     char *newPath = (char *)malloc((strlen(path) + 3) * sizeof(char));
@@ -26,7 +27,7 @@ void deleteProject(char *path)
                 printf("Name: %10s  Type: %d\n", dir->d_name, dir->d_type);
                 if(dir->d_type == 4)
                 {
-                    deleteProject(dir->d_name);
+                    deleteProject(dir->d_name, flags);
                 }
                 if(dir->d_type == 8)
                 {

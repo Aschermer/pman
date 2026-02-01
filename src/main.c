@@ -17,8 +17,9 @@
 #include "copy.c"
 
 // 32 bit flags
-enum OPTIONFLAGS{
-    NONE = 0x0000
+enum FLAGS{
+    FLAG_NONE = 0b00000000000000000000000000000000,
+    FLAG_GIT_REPO = 0b00000000000000000000000000000001
 };
 
 void printHelp() 
@@ -46,10 +47,21 @@ void printHelp()
 
 int parseOptions(char *arg)
 {
+    uint32_t flags = FLAG_NONE;
+    for(int i = 0; arg[i] != '\0'; i++)
+    {
+        switch (arg[i]) {
+            case 'g':
+            {
+                flags |= FLAG_GIT_REPO;
+                break;
+            }
+        }
+    }
     return(0);
 }
 
-void parseCommands(char *command, uint32_t optionBits, char *arg1, char *arg2)
+void parseCommands(char *command, char *arg1, char *arg2, uint32_t flags)
 {
     for(int i = 0; command[i] != '\0'; i++)
     {
@@ -69,19 +81,19 @@ void parseCommands(char *command, uint32_t optionBits, char *arg1, char *arg2)
     }
     else if(strcmp(command, "create") == 0)
     {
-        createProject(arg1, arg2);
+        createProject(arg1, arg2, flags);
     }
     else if(strcmp(command, "delete") == 0)
     {
-        deleteProject(arg1);
+        deleteProject(arg1, flags);
     }
     else if(strcmp(command, "rename") == 0)
     {
-        renameProject(arg1, arg2);
+        renameProject(arg1, arg2, flags);
     }
     else if(strcmp(command, "copy") == 0)
     {
-        copyProject(arg1, arg2);
+        copyProject(arg1, arg2, flags);
     }
     else 
     {
@@ -94,7 +106,7 @@ void parseCommands(char *command, uint32_t optionBits, char *arg1, char *arg2)
 int main(int argc, char *argv[])
 {
     int commandID = -1;
-    int32_t optionBits = 0;
+    int32_t flags = 0;
     char *arg1 = 0;
     char *arg2 = 0;
     
@@ -112,7 +124,7 @@ int main(int argc, char *argv[])
         {
             if(argv[i][0] == '-')
             {
-                optionBits = optionBits | parseOptions(argv[i]);
+                flags = flags | parseOptions(argv[i]);
             }
             else
             {
@@ -147,7 +159,7 @@ int main(int argc, char *argv[])
     char *cwd = (char *)malloc(100 * sizeof(char));
     getcwd(cwd, 100);
 
-    parseCommands(argv[1], optionBits, arg1, arg2);
+    parseCommands(argv[1], arg1, arg2, flags);
 
     return(0);
 }

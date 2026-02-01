@@ -6,17 +6,22 @@
 #include <unistd.h>
 #include <git2.h>
 
+#include "templateUtils.h"
+
 void writeFile(char *fileName, char *fileContents)
 {
     FILE *f = fopen(fileName, "w");
     fputs(fileContents, f);
 }
 
-void defaultTemplate(char *name)
+void createDefaultTemplate(char *name)
 {
     mkdir(name, 0777);
     chdir(name);
+}
 
+void createGitRepo()
+{
     git_libgit2_init();
 
     git_repository *repo = NULL;

@@ -1,11 +1,13 @@
 #include <ctype.h>
+#include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
 #include "templates/c.c"
 
-void createProject(char *name, char *rawTemplate)
+void createProject(char *name, char *rawTemplate, uint32_t flags)
 {
     char template[128];
     for(int i = 0; rawTemplate[i] != '\0'; i++)
@@ -15,11 +17,11 @@ void createProject(char *name, char *rawTemplate)
 
     if(strcmp(template, "empty") == 0 || strcmp(template, "e") == 0)
     {
-        defaultTemplate(name);
+        createDefaultTemplate(name);
     }
     else if(strcmp(template, "c") == 0)
     {
-        defaultTemplate(name);
+        createDefaultTemplate(name);
         templateC();
     }
     else
